@@ -14,6 +14,10 @@ const PetShopSchema = new mongoose.Schema({
         ref: 'User',
         required: true
       },
+    products: [{                // Array of products BUGUN EKLENDI
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }]  
 });
 
 module.exports = mongoose.model('PetShop', PetShopSchema);

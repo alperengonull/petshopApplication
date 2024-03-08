@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const userController = require('./controllers/userController');
 const petshopController = require('./controllers/petshopController');
 const auth = require('./middleware/auth');
@@ -11,6 +10,7 @@ router.post('/login', userController.login);
 
 // Petshop public routes
 router.get('/petshops', petshopController.allPetshops);
+router.get('/petshops/search', petshopController.searchPetshops);
 
 // Protected user route 
 router.put('/profile', auth, userController.updateProfile);

@@ -29,6 +29,19 @@ exports.allPetshops = async (req, res) => {
 }
 
 
+// Search petshops by name
+exports.searchPetshops = async (req, res) => {
+    try {
+        const name = req.query.name;
+        const petshops = await Petshop.find({ name: new RegExp(name, 'i') });
+        res.status(200).json(petshops);
+    }
+    catch (error) {
+        res.status(500).json({error:"An error occured"});
+    }
+}
+
+
 // Get all petshops owned by the authenticated user
 exports.getAllPetshops = async (req, res) => {
     try {
