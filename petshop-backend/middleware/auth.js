@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
     const token = bearerHeader.split(' ')[1];
     // Verify token
     try {
-        const decoded = jwt.verify(token, 'c745591d85d098fd97f38f7760c48435');
+        const decoded = jwt.verify(token, 'ef09153b95b2ce8384b7651d522351fd');
         req.user = decoded;
         next();
     } catch (err) {

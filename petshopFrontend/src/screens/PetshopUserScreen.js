@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const PetshopScreen = () => {
+const PetshopUserScreen = () => {
   return (
     <View>
-      <Text>Petshop seller</Text>
+      <Text>Petshop Buyer</Text>
     </View>
   )
 }
 
-export default PetshopScreen
+export default PetshopUserScreen

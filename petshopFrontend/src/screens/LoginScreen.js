@@ -13,7 +13,16 @@ const LoginScreen = ({ navigation }) => {
             const response = await axios.post('http://10.0.2.2:3000/login', { username, password });
             await AsyncStorage.setItem('token', response.data.token);
             console.log(response.data.token);
-            navigation.navigate('PetshopsScreen')
+
+            // Navigate based on user type
+            if (response.data.type === 1) {
+                navigation.navigate('PetshopsScreen');
+            } else if (response.data.type === 0) {
+                navigation.navigate('PetshopUserScreen');
+            } else {
+                console.log(response.data.type)
+                Alert.alert('Error', 'Invalid user type');
+            }
         } catch (error) {
             Alert.alert('Error', 'Invalid username or password');
         }
