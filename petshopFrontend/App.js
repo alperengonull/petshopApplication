@@ -4,6 +4,7 @@ import Register from './src/screens/RegisterScreen';
 import Login from './src/screens/LoginScreen';
 import Petshops from './src/screens/PetshopScreen';
 import PetshopUserScreen from './src/screens/PetshopUserScreen';
+import CreatePetshopScreen from './src/screens/CreatePetshopScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ const App = () => {
         <Stack.Screen name="RegisterScreen" component={Register} />
         <Stack.Screen name="PetshopsScreen" component={Petshops} />
         <Stack.Screen name="PetshopUserScreen" component={PetshopUserScreen} />
+        <Stack.Screen name="CreatePetshopScreen" component={CreatePetshopScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
