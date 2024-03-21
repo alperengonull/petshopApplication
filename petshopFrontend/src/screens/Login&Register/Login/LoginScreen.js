@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
 
             // Navigate based on user type
             if (response.data.type === 1) {
-                navigation.navigate('PetshopsScreen');
+                navigation.navigate('PetshopScreen');
             } else if (response.data.type === 0) {
                 navigation.navigate('PetshopUserScreen');
             } else {

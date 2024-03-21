@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PetshopList from '../components/SellerPetshopList';
+import PetshopList from '../../../components/SellerPetshopList';
 import { useIsFocused } from '@react-navigation/native';
 
 const PetshopScreen = ({ navigation }) => {
@@ -11,9 +11,9 @@ const PetshopScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (isFocused) {
-        fetchPetshops();
+      fetchPetshops();
     }
-}, [isFocused]);
+  }, [isFocused]);
 
   const fetchPetshops = async () => {
     try {

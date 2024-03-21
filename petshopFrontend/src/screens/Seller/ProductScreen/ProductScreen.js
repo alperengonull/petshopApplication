@@ -1,0 +1,67 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet,Alert } from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProductList from '../../../components/SellerProductList';
+import { useIsFocused } from '@react-navigation/native';
+
+const ProductScreen = ({ route,navigation }) => {
+
+   const { petshopId } = route.params;
+
+    const [products, setProducts] = useState([]);
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchProducts();
+        }
+    }
+        , [isFocused]);
+
+    const fetchProducts = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token');
+            const response = await axios.get(`http://10.0.2.2:3000/petshop/${petshopId}/products`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setProducts(response.data);
+        } catch (error) {
+            console.log(error.response);
+            Alert.alert('Error', 'Failed to fetch petshops');
+        }
+    }
+
+    return (
+        <View style={styles.container}>
+            <ProductList products={products} onRefresh={fetchProducts} />
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CreateProductScreen', { petshopId })}>
+                <Text style={styles.buttonText}>Create Product</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 20,
+    },
+    button: {
+        position: 'absolute',
+        right: 20,
+        bottom: 20,
+        backgroundColor: '#1E90FF',
+        padding: 10,
+        borderRadius: 30,
+    },
+    buttonText: {
+        color: '#FFF',
+        fontSize: 16,
+    },
+});
+
+export default ProductScreen;

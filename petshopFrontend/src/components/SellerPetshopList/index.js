@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image,Alert,TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, Alert, TouchableOpacity } from 'react-native';
 import petshopImage from '../../../assets/petshop-1000x887.jpg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const PetshopList = ({ petshops, onRefresh }) => {
+
+    const navigation = useNavigation();
 
     const deletePetshop = async (id) => {
         try {
@@ -26,22 +29,24 @@ const PetshopList = ({ petshops, onRefresh }) => {
             data={petshops}
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
-                <View style={styles.petshop}>
-                    <Image style={styles.image} source={petshopImage} />
-                    <View style={styles.details}>
-                        <Text style={styles.name}>{item.name}</Text>
-                        <Text style={styles.address}>{item.address}</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('ProductScreen', { petshopId: item._id })}>
+                    <View style={styles.petshop}>
+                        <Image style={styles.image} source={petshopImage} />
+                        <View style={styles.details}>
+                            <Text style={styles.name}>{item.name}</Text>
+                            <Text style={styles.address}>{item.address}</Text>
+                        </View>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.removeButton} onPress={() => deletePetshop(item._id)}>
+                                <Text style={styles.removeButtonText}>Remove</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.removeButton} onPress={() => deletePetshop(item._id)}>
-                            <Text style={styles.removeButtonText}>Remove</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                </TouchableOpacity>
             )}
         />
     );
-    
+
 };
 
 const styles = StyleSheet.create({
@@ -86,15 +91,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-    },
-    removeButton: {
-        backgroundColor: '#ff0000',
-        padding: 5,
-        borderRadius: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 60,
-        height: 30,
     },
 });
 
