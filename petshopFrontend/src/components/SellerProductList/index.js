@@ -1,27 +1,36 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import productImage from '../../../assets/petshop-1000x887.jpg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const PetshopList = ({ route,products }) => {
+const PetshopList = ({ products, onRefresh }) => {
 
-    // const { petshopId } = route.params;
 
-    // const deleteProduct = async (id) => {
-    //     try {
-    //         const token = await AsyncStorage.getItem('token');
-    //         await axios.delete(`http://10.0.2.2:3000/petshop/${petshopId}/product/${id}`, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`
-    //             }
-    //         });
-    //         onRefresh();
-    //     } catch (error) {
-    //         console.log(error);
-    //         Alert.alert('Error', 'Failed to delete petshop');
-    //     }
-    // };
+    
+    const deleteProduct = async (petshopId, id) => {
+        console.log(`Deleting product with ID ${id} from petshop with ID ${petshopId}`);
+        try {
+            const token = await AsyncStorage.getItem('token');
+            await axios.delete(`http://10.0.2.2:3000/petshop/${petshopId}/product/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            onRefresh();
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.data);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            Alert.alert('Error', 'Failed to delete product');
+        }
+    };
+
+
 
     return (
         <FlatList
@@ -35,9 +44,9 @@ const PetshopList = ({ route,products }) => {
                         <Text style={styles.price}>{item.price} TL</Text>
                     </View>
                     <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.removeButton} onPress={() => deleteProduct(item._id)}>
-                                <Text style={styles.removeButtonText}>Remove</Text>
-                            </TouchableOpacity>
+                        <TouchableOpacity style={styles.removeButton} onPress={() => deleteProduct(item.petshop, item._id)}>
+                            <Text style={styles.removeButtonText}>Remove</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             )}
