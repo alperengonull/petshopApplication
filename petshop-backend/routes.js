@@ -13,6 +13,9 @@ router.post('/login', userController.login);
 router.get('/petshops', petshopController.allPetshops);
 router.get('/petshops/search', petshopController.searchPetshops);
 
+// Product public routes
+router.get('/petshop/:id/products', productController.getProducts);
+
 // Protected user route 
 router.put('/profile', auth, userController.updateProfile);
 router.delete('/deleteprofile', auth, userController.deleteUser);

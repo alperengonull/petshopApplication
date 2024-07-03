@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
             if (response.data.type === 1) {
                 navigation.navigate('PetshopScreen');
             } else if (response.data.type === 0) {
-                navigation.navigate('PetshopUserScreen');
+                navigation.navigate('UserHomeScreen');
             } else {
                 console.log(response.data.type)
                 Alert.alert('Error', 'Invalid user type');
